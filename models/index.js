@@ -14,10 +14,12 @@ const connection = {
   dialectModule: require('mysql2'),
   dialectOptions: {
     ssl: {
-      ca: fs.readFileSync(
-        path.join(__dirname, '..', 'ca.pem'),
-        'utf8'
-      ),
+ca: process.env.DB_CA_CERT
+  ? process.env.DB_CA_CERT.replace(/\\n/g, '\n')
+  : fs.readFileSync(
+      path.join(__dirname, '..', 'ca.pem'),
+      'utf8'
+    ),
       rejectUnauthorized: true
     }
   }
